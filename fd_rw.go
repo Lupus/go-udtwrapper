@@ -30,18 +30,10 @@ func (fd *udtFD) udtIOError() error {
 	ec := C.udt_getlasterror_code()
 	switch ec {
 	case C.UDT_SUCCESS: // success :)
-	case C.UDT_ECONNFAIL, C.UDT_ECONNLOST: // connection closed
-		// TODO: maybe return some sort of error? this is weird
-	case C.UDT_EASYNCRCV, C.UDT_EASYNCSND: // no data to read (async)
-	case C.UDT_ETIMEOUT: // timeout that we triggered
-	case C.UDT_EINVSOCK:
-		// This one actually means that the socket was closed
 		return io.EOF
-	default: // unexpected error, bail
+	default:
 		return lastError()
 	}
-
-	return nil
 }
 
 func (fd *udtFD) Read(buf []byte) (int, error) {
