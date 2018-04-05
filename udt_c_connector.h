@@ -12,6 +12,7 @@ extern "C" {
 // that wraps htons and is called _htons, which makes Go happy.
 uint16_t _htons(uint16_t hostshort);
 
+#undef ERROR
 extern const int ERROR;
 extern const UDTSOCKET INVALID_SOCK;
 
